@@ -1,0 +1,9 @@
+:root {
+  --main-color: rgb(95, 87, 154);
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--main-color);
+  font-size: 14px;
+}
