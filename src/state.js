@@ -28,8 +28,10 @@ function initState(){
     // Inicia el estado segun la info de localStorage
     
     let storageData = JSON.parse(localStorage.getItem('autoclicker'))
-    state.currentPlayer = storageData.currentPlayer
-    state.players = storageData.players
+    if (storageData) {
+        state.currentPlayer = storageData.currentPlayer
+        state.players = storageData.players
+    }
 }
 initState()
 
