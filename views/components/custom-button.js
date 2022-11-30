@@ -19,6 +19,7 @@ export class custombutton extends LitElement {
         border: 2px solid black;
         border-radius: 5px;
         padding: 1rem 2rem;
+        font-family: 'Nunito', sans-serif;
       }
       button[disabled=true]{
         background-color: red

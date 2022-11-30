@@ -24,7 +24,7 @@ export class userform extends LitElement {
       padding: 0 0.5rem;
       z-index: 1;
     }
-    input, button {
+    input {
       width: 100%;
       box-sizing: border-box;
       padding: 0;
@@ -35,6 +35,7 @@ export class userform extends LitElement {
       border: 2px solid black;
       border-radius: 5px;
       padding: 1rem;
+      font-family: 'Nunito', sans-serif;
     }
     input[type='submit'] {
       background-color: var(--main-color);
@@ -49,7 +50,7 @@ export class userform extends LitElement {
             <p>Name *</p>
             <input type="text" class="custom-input" autocomplete="username" name="username" id="user-name" aria-label="user-name" aria-required="true" required />
             </label>
-            <button type="submit">Join</button>
+            <input type="submit" value="Join" />
         </form>
     `;
   }

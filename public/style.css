@@ -1,9 +1,17 @@
 :root {
   --main-color: rgb(95, 87, 154);
 }
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-VariableFont_wght.ttf');
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: var(--main-color);
+  
+  font-family: 'Nunito', sans-serif;
   font-size: 14px;
 }
