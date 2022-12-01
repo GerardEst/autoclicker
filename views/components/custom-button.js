@@ -42,10 +42,6 @@ export class custombutton extends LitElement {
       </button>
     `;
   }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
 }
 
 customElements.define('custom-button', custombutton);

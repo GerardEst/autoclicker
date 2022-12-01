@@ -69,10 +69,6 @@ export class buybutton extends LitElement {
       </button>
     `;
   }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
 }
 
 customElements.define('buy-button', buybutton);

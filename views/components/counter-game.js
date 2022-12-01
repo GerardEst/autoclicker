@@ -147,7 +147,6 @@ export class counteregame extends LitElement {
     });
     this.intervals = [];
 
-    // Aqui hauriem de treure també el currentPlayer
     state.clearCurrentPlayer();
   }
 }
