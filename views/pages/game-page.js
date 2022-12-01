@@ -2,7 +2,7 @@ import {LitElement, css, html} from 'lit';
 import '../components/menu-bar.js';
 import '../components/counter-game.js';
 
-export class pagegame extends LitElement {
+export class gamepage extends LitElement {
   static styles = css`
     :host {
       height: 100%;
@@ -18,4 +18,4 @@ export class pagegame extends LitElement {
     `;
   }
 }
-customElements.define('page-game', pagegame);
+customElements.define('game-page', gamepage);

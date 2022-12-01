@@ -3,7 +3,7 @@ import {reset} from '../resetcss';
 
 import '../components/user-form.js';
 
-export class pagehome extends LitElement {
+export class homepage extends LitElement {
   static styles = [
     reset,
     css`
@@ -48,4 +48,4 @@ export class pagehome extends LitElement {
   }
 }
 
-customElements.define('page-home', pagehome);
+customElements.define('home-page', homepage);

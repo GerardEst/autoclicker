@@ -1,9 +1,9 @@
-import '../views/pages/game.js';
-import '../views/pages/home.js';
+import '../views/pages/game-page.js';
+import '../views/pages/home-page.js';
 
 const routes = {
-  '/': 'page-home',
-  '/game': 'page-game',
+  '/': 'home-page',
+  '/game': 'game-page',
 };
 
 /** Todo lo que no vaya a index va aquí
