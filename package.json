@@ -20,13 +20,11 @@
     "url": "https://github.com/GerardEst/rockpaperscissors/issues"
   },
   "homepage": "https://github.com/GerardEst/rockpaperscissors#readme",
-  "dependencies": {
+  "devDependencies": {
     "@open-wc/testing": "^3.1.7",
     "esbuild": "^0.15.15",
     "http-server": "^14.1.1",
-    "lit": "^2.4.1"
-  },
-  "devDependencies": {
+    "lit": "^2.4.1",
     "@web/dev-server": "^0.1.35",
     "@web/test-runner": "^0.15.0",
     "concurrently": "^7.6.0",
