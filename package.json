@@ -1,0 +1,36 @@
+{
+  "name": "autoclicker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "concurrently -k -n \"http,watch\" -c \"auto\" \"npm:dev-serve\" \"npm:dev-build\" ",
+    "dev-serve": "http-server -o -c-1",
+    "dev-build": "esbuild ./src/main.js --watch --bundle --sourcemap --minify --outfile=./public/main.min.js",
+    "prettier": "npx prettier --write .",
+    "test": "web-test-runner test/**/*.test.js --node-resolve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GerardEst/rockpaperscissors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GerardEst/rockpaperscissors/issues"
+  },
+  "homepage": "https://github.com/GerardEst/rockpaperscissors#readme",
+  "dependencies": {
+    "@open-wc/testing": "^3.1.7",
+    "esbuild": "^0.15.15",
+    "http-server": "^14.1.1",
+    "lit": "^2.4.1"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.35",
+    "@web/test-runner": "^0.15.0",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.28.0",
+    "prettier": "2.8.0"
+  }
+}

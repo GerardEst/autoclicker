@@ -1,0 +1,27 @@
+:root {
+  --main-color: rgb(131, 214, 222);
+  --main-color--light: rgb(131, 214, 222, 0.4);
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-VariableFont_wght.ttf');
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'Alexandria';
+  src: url('./fonts/Alexandria-VariableFont_wght.ttf');
+  font-weight: 100 900;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--main-color);
+  background: linear-gradient(180deg, rgba(131, 214, 222, 1) 39%, rgba(58, 169, 191, 1) 100%);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+}
