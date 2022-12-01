@@ -30,6 +30,7 @@ export class counteregame extends LitElement {
       .upgrades {
         margin-top: auto;
         width: 70%;
+        max-width: 300px;
       }
       .messages {
         height: 4rem;

@@ -19,15 +19,12 @@ export class buybutton extends LitElement {
         justify-content: space-between;
         align-items: center;
 
-        border-radius: var(--borderradius);
         width: 100%;
-        box-sizing: border-box;
         padding: 0;
         margin: 0;
         font-size: 1rem;
-        margin-bottom: 1rem;
         border: none;
-        border-radius: 5px;
+        border-radius: calc(var(--borderradius) + 2px);
         font-family: 'Nunito', sans-serif;
       }
       button[disabled] {
