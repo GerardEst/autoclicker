@@ -2,7 +2,7 @@ import {LitElement, css, html} from 'lit';
 import {reset} from '../resetcss.js';
 import {goTo} from '../../src/router.js';
 
-export class buttonlink extends LitElement {
+export class linkbutton extends LitElement {
   constructor() {
     super();
     this.href = '/game';
@@ -44,4 +44,4 @@ export class buttonlink extends LitElement {
   }
 }
 
-customElements.define('button-link', buttonlink);
+customElements.define('link-button', linkbutton);

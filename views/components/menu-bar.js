@@ -1,6 +1,6 @@
 import {LitElement, css, html} from 'lit';
 import {reset} from '../resetcss.js';
-import './button-link';
+import './link-button';
 import * as state from '../../src/state.js';
 
 export class menubar extends LitElement {
