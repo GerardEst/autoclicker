@@ -3,3 +3,4 @@ node_modules
 ./public/main.min.js.map
 ./public/img
 ./public/fonts
+readme.md
