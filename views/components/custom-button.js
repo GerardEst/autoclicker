@@ -24,7 +24,7 @@ export class custombutton extends LitElement {
         background-color: white;
       }
       button[big] {
-        font-size: 2rem;
+        font-size: 1.5rem;
         padding: 1rem 2rem;
       }
     `,

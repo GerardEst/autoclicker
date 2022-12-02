@@ -39,7 +39,7 @@ export class homepage extends LitElement {
   render() {
     return html`
       <section class="welcome">
-        <h1>CLICKER<br />BOAT</h1>
+        <h1>FISHING<br />BOAT</h1>
       </section>
       <section class="login">
         <user-form></user-form>

@@ -71,7 +71,7 @@ export class userform extends LitElement {
             required
           />
         </label>
-        <input type="submit" value="Join" />
+        <input type="submit" value="Sail" />
       </form>
     `;
   }

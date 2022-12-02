@@ -20,9 +20,15 @@ export class counteregame extends LitElement {
       .counter {
         flex: 1;
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
       }
       .counter p {
+        font-size: 1.5rem;
+        font-weight: 200;
+      }
+      .counter .counter__num {
         font-family: 'Alexandria';
         font-weight: 800;
         font-size: 3rem;
@@ -52,21 +58,23 @@ export class counteregame extends LitElement {
     this.counter = 0;
     this.intervals = [];
     this.upgrades = 0;
-    this.baseCost = 5;
-    this.speed = 500;
+    this.baseCost = 50;
+    this.speed = 100;
   }
 
   render() {
     return html`
       <section class="counter">
-        <p><span class="counter__num">${this.counter}</span>m</p>
+        <p>You've caught</p>
+        <p class="counter__num">${this.counter}</p>
+        <p>fish</p>
       </section>
       <section class="upgrades">
-        <custom-button @click="${this._increment}" big>Row</custom-button>
+        <custom-button @click="${this._increment}" big>Throw the rod</custom-button>
         <buy-button
           ?disabled="${this.counter < this.UPGRADE_PRICE()}"
           @click="${this._buyUpgrade}"
-          item="sail"
+          item="net"
           level=${this.upgrades}
           cost=${this.UPGRADE_PRICE()}
         ></buy-button>
