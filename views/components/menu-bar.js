@@ -32,7 +32,7 @@ export class menubar extends LitElement {
           <p>Hi <span>${state.getCurrentPlayer()}</span></p>
         </div>
         <link-button href="/"
-          >Exit <img alt="Exit button" width="20px" src="/img/exit.svg"
+          >Exit <img alt="Exit button" width="20px" src="/icons/exit.svg"
         /></link-button>
       </div>
     `;
