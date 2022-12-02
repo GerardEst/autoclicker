@@ -1,6 +1,7 @@
 import {LitElement, css, html} from 'lit';
 import {reset} from '../resetcss';
 
+import '../components/link-button.js';
 import '../components/user-form.js';
 
 export class homepage extends LitElement {
@@ -44,6 +45,7 @@ export class homepage extends LitElement {
       <section class="login">
         <user-form></user-form>
       </section>
+      <link-button href="/ranking">Ranking</link-button>
     `;
   }
 }
