@@ -4,12 +4,6 @@ import {html, fixture, expect, aTimeout} from '@open-wc/testing';
 
 import '../views/components/counter-game.js';
 
-/** Deberia importar algunas opciones comunes y que necesito que esten pareadas
- * como el coste base de un upgrade o el tiempo de intervalo
- * De momento hago:
- */
-const baseCost = 5;
-
 describe('Counter game flow -> click and buy upgrade', async () => {
   const el = await fixture(html`<counter-game></counter-game>`);
   const counter = el.shadowRoot.querySelector('.counter__num');
@@ -38,10 +32,11 @@ describe('Counter game flow -> click and buy upgrade', async () => {
   });
 
   it('Buy upgrade makes counter go down by cost', async () => {
+    const upgradeCost = 50;
     const currentCounterNum = Number(counter.textContent);
     await buyButton.click();
 
-    expect(Number(counter.textContent)).to.equal(currentCounterNum - baseCost);
+    expect(Number(counter.textContent)).to.equal(currentCounterNum - upgradeCost);
   });
 
   it('Buy upgrade makes counter grow automatically', async () => {
