@@ -2,7 +2,9 @@
 
 Run the project in local by
 
-`npm install` 
+`npm install` and 
 `npm run dev-serve`
 
-> run dev-serve will launch the app on an http server
+> dev-serve will launch the app on an http server
+
+The app is already builded. If a rebuild is needed for development `npm run dev` will open the http server and run esbuild in watch mode
