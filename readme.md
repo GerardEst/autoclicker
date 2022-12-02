@@ -6,5 +6,5 @@ Run the project in local by
 `npm run dev-serve`
 
 > dev-serve will launch the app on an http server
-
-The app is already builded. If a rebuild is needed for development `npm run dev` will open the http server and run esbuild in watch mode
+____
+The app is already builded, but if a rebuild is needed for development, `npm run dev` will open the http server and run esbuild in watch mode
