@@ -41,7 +41,7 @@ describe('Counter game flow -> click and buy upgrade', async () => {
 
   it('Buy upgrade makes counter grow automatically', async () => {
     const currentCounterNum = Number(counter.textContent);
-    await aTimeout(1500);
+    await aTimeout(300);
 
     expect(Number(counter.textContent)).to.be.greaterThan(currentCounterNum);
   });
