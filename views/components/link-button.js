@@ -39,7 +39,8 @@ export class linkbutton extends LitElement {
     `;
   }
 
-  _routeTo() {
+  _routeTo(e) {
+    e.preventDefault();
     goTo(this.href);
   }
 }

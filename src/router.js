@@ -1,6 +1,3 @@
-import '../views/pages/game-page.js';
-import '../views/pages/home-page.js';
-
 const routes = {
   '/': 'home-page',
   '/game': 'game-page',
