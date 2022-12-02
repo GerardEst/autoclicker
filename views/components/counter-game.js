@@ -53,9 +53,7 @@ export class counteregame extends LitElement {
     this.intervals = [];
     this.upgrades = 0;
     this.baseCost = 5;
-    this.cost = this.baseCost;
     this.speed = 500;
-    this.player = state.getCurrentPlayer();
   }
 
   render() {
@@ -65,39 +63,63 @@ export class counteregame extends LitElement {
       </section>
       <section class="upgrades">
         <custom-button @click="${this._increment}" big>Row</custom-button>
-
         <buy-button
-          ?disabled="${this.counter < this._cost()}"
-          @click="${this._buyIncrement}"
+          ?disabled="${this.counter < this.UPGRADE_PRICE()}"
+          @click="${this._buyUpgrade}"
           item="sail"
           level=${this.upgrades}
-          cost=${this._cost()}
-        >
-        </buy-button>
+          cost=${this.UPGRADE_PRICE()}
+        ></buy-button>
       </section>
+      <!-- Aixo podria ser un petit component apart al que se li passa el missatge -->
       <section class="messages">
         <p class="message">${this.message}</p>
       </section>
     `;
   }
 
-  _increment() {
-    this.counter++;
+  connectedCallback() {
+    super.connectedCallback();
 
-    state.alterPlayer(this.player, 'points', this.counter);
-  }
-
-  _buyIncrement() {
-    if (this.counter < this._cost()) {
-      this._showMessage('Not enough money');
+    let currentPlayer = state.getCurrentPlayer();
+    let isReturningPlayer = state.getStoredPlayer(currentPlayer);
+    if (isReturningPlayer) {
+      this.counter = isReturningPlayer.points;
+      this.upgrades = isReturningPlayer.upgrades;
+      this._rebuildIntervalsFor(this.upgrades);
       return;
     }
-    this.counter -= this._cost();
+    state.addNewPlayer(currentPlayer);
+  }
 
-    this._createNewInterval();
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._clearAllIntervals();
+    state.clearCurrentPlayer();
+  }
+
+  _increment() {
+    this.counter++;
+    state.alterCurrentPlayer('points', this.counter);
+  }
+
+  _buyUpgrade() {
+    if (this.counter < this.UPGRADE_PRICE()) {
+      this._showMessage('Not enough credits');
+      return;
+    }
+    this.counter -= this.UPGRADE_PRICE();
+    this._createNewUpgrader();
     this.upgrades++;
+    state.alterCurrentPlayer('upgrades', this.upgrades);
+  }
 
-    state.alterPlayer(this.player, 'upgrades', this.upgrades);
+  _createNewUpgrader() {
+    const interval = setInterval(() => {
+      this._increment();
+    }, this.speed);
+    this.intervals.push(interval);
   }
 
   _showMessage(message) {
@@ -107,49 +129,20 @@ export class counteregame extends LitElement {
     }, 3000);
   }
 
-  _createNewInterval() {
-    const interval = setInterval(() => {
-      this._increment();
-    }, this.speed);
-    this.intervals.push(interval);
-  }
-
-  _cost() {
-    return this.baseCost + this.baseCost * this.upgrades;
-  }
-
-  // Aqui dins podria millorar la cosa una miqueta per fer-ho mes entenedor
-  connectedCallback() {
-    super.connectedCallback();
-
-    let allPlayers = state.getAllPlayers();
-
-    if (allPlayers[this.player]) {
-      let player = state.getPlayer(this.player);
-
-      this.counter = player.points;
-      this.upgrades = player.upgrades;
-
-      // Iniciem tots els intervals (APARTAR AIXO D'AQUI)
-      let upgrades = state.getPlayer(this.player).upgrades;
-      for (let i = 0; i < upgrades; i++) {
-        this._createNewInterval();
-      }
-    } else {
-      state.addNewPlayer(this.player);
+  _rebuildIntervalsFor(amountOfUgrades) {
+    for (let i = 0; i < amountOfUgrades; i++) {
+      this._createNewUpgrader();
     }
   }
-  disconnectedCallback() {
-    super.disconnectedCallback();
 
-    // Matem tots els intervals (APARTAR AIXO D'AQUI)
+  _clearAllIntervals() {
     this.intervals.forEach(interval => {
       clearInterval(interval);
     });
     this.intervals = [];
-
-    state.clearCurrentPlayer();
   }
+
+  UPGRADE_PRICE = () => this.baseCost + this.baseCost * this.upgrades;
 }
 
 customElements.define('counter-game', counteregame);

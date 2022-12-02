@@ -4,10 +4,10 @@ const state = {
 };
 
 let localStorageData = JSON.parse(localStorage.getItem('autoclicker'));
-if (localStorageData) initStateFromLocalStorage();
+if (localStorageData) initStateFromLocalStorage(localStorageData);
 
 export const getCurrentPlayer = () => state.currentPlayer;
-export const getPlayer = name => state.players[name];
+export const getStoredPlayer = name => state.players[name];
 export const getAllPlayers = () => state.players;
 
 export const setCurrentPlayer = currentPlayer => {
@@ -24,8 +24,8 @@ export const addNewPlayer = name => {
   saveChangesToLocalstorage();
 };
 
-export const alterPlayer = (player, prop, value) => {
-  let playerToAlter = state.players[player];
+export const alterCurrentPlayer = (prop, value) => {
+  let playerToAlter = state.players[state.currentPlayer];
   playerToAlter[prop] = value;
   saveChangesToLocalstorage();
 };
@@ -35,9 +35,9 @@ export const clearCurrentPlayer = () => {
   saveChangesToLocalstorage();
 };
 
-function initStateFromLocalStorage() {
-  state.currentPlayer = localStorageData.currentPlayer;
-  state.players = localStorageData.players;
+function initStateFromLocalStorage(data) {
+  state.currentPlayer = data.currentPlayer;
+  state.players = data.players;
 }
 
 function saveChangesToLocalstorage() {
