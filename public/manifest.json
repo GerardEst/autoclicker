@@ -1,7 +1,7 @@
 {
   "name": "Fishing Boat",
   "short_name": "Fishing Boat",
-  "start_url": "index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#83D6DE",
   "theme_color": "#83D6DE",
