@@ -54,14 +54,14 @@ export class counteregame extends LitElement {
     this.upgrades = 0;
     this.baseCost = 5;
     this.cost = this.baseCost;
-    this.speed = 1000;
+    this.speed = 500;
     this.player = state.getCurrentPlayer();
   }
 
   render() {
     return html`
       <section class="counter">
-        <p>${this.counter}m</p>
+        <p><span class="counter__num">${this.counter}</span>m</p>
       </section>
       <section class="upgrades">
         <custom-button @click="${this._increment}" big>Row</custom-button>
