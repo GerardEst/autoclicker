@@ -33,7 +33,7 @@ export class linkbutton extends LitElement {
 
   render() {
     return html`
-      <a @click="${this._routeTo}" href="${this.href}">
+      <a @click="${this._routeTo}">
         <slot></slot>
       </a>
     `;

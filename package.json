@@ -8,7 +8,8 @@
     "dev-serve": "http-server -o -c-1",
     "dev-build": "esbuild ./src/main.js --watch --bundle --sourcemap --minify --outfile=./public/main.min.js",
     "prettier": "npx prettier --write .",
-    "test": "web-test-runner test/**/*.test.js --node-resolve"
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "fileTest": "web-test-runner test/**/ranking-view.test.js --node-resolve"
   },
   "repository": {
     "type": "git",
