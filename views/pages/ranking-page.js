@@ -22,10 +22,18 @@ export class rankingpage extends LitElement {
         overflow-y: auto;
       }
       .rankItem {
-        background-color: white;
+        font-size: 1.5rem;
+        padding: 0.4em 0;
+        margin-right: 0.5rem;
+        border-bottom: 0.8px solid black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-      .rankItem:nth-child(even) {
-        background-color: lightblue;
+      .rankItem p:last-child {
+        font-family: 'Alexandria';
+        font-size: 0.8em;
+        font-weight: 700;
       }
     `,
   ];
@@ -44,7 +52,10 @@ export class rankingpage extends LitElement {
       <h1>Ranking</h1>
       <div class="rankList">
         ${this.playersList.map(player => {
-          return html`<div class="rankItem">${player.name}</div>`;
+          return html`<div class="rankItem">
+            <p>${player.name}</p>
+            <p>${player.points}</p>
+          </div>`;
         })}
       </div>
     `;
