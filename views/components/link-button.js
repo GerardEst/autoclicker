@@ -21,12 +21,14 @@ export class linkbutton extends LitElement {
         padding: 1rem;
         gap: 0.5rem;
 
-        background-color: #edf6f6;
+        background-color: #283b3b;
         border-radius: 5px;
 
-        color: black;
+        color: white;
         font-size: 1rem;
         text-decoration: none;
+
+        justify-content: center;
       }
     `,
   ];

@@ -42,7 +42,9 @@ export class homepage extends LitElement {
         <user-form></user-form>
       </section>
       <section>
-        <link-button href="/ranking">Ranking</link-button>
+        <link-button href="/ranking"
+          ><img src="/icons/ranking.svg" width="20px" />Ranking</link-button
+        >
       </section>
     `;
   }
