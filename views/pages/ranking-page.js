@@ -18,6 +18,7 @@ export class rankingpage extends LitElement {
         display: flex;
         flex-direction: column;
         width: 100%;
+        box-sizing: border-box;
         flex: 1;
         padding: 0 1rem;
         overflow-y: auto;

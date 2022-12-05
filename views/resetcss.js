@@ -17,11 +17,11 @@ export const reset = css`
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background-color: #e2e2e2aa;
+    background-color: #e2e2e245;
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: #51515177;
+    background-color: #ffffff63;
     border-radius: 2px;
   }
 `;
