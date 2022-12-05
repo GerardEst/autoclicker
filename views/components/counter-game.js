@@ -46,6 +46,9 @@ export class counteregame extends LitElement {
       .message {
         font-size: 1rem;
       }
+      .money__num {
+        font-size: 1.5rem;
+      }
     `,
   ];
 
@@ -61,22 +64,27 @@ export class counteregame extends LitElement {
     this.intervals = [];
     this.upgrades = 0;
     this.baseCost = 50;
-    this.speed = 100;
+    this.speed = 1500;
   }
 
   render() {
     return html`
-      <section>
-        <p class="money__num">${this.money}</p>
-        <custom-button color="var(--gold)" id="sellFish" @click="${this._sellFish}"
-          >Sell!</custom-button
-        >
-      </section>
-
       <section class="counter">
         <p>You've caught</p>
         <p class="counter__num">${this.counter}</p>
         <p>fish</p>
+      </section>
+
+      <section class="money">
+        <p class="money__num">${this.money}€</p>
+        <custom-button
+          important
+          bcolor="var(--gold)"
+          color="white"
+          id="sellFish"
+          @click="${this._sellFish}"
+          >Sell fish</custom-button
+        >
       </section>
 
       <section class="upgrades">

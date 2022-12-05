@@ -6,6 +6,8 @@ export class custombutton extends LitElement {
     disabled: {type: Boolean},
     big: {type: Boolean},
     color: {type: String},
+    bcolor: {type: String},
+    important: {type: Boolean},
   };
 
   static styles = [
@@ -28,12 +30,19 @@ export class custombutton extends LitElement {
         font-size: 1.5rem;
         padding: 1rem 2rem;
       }
+      button[important] {
+        font-family: 'Alexandria';
+        font-weight: 800;
+        font-size: 1rem;
+        letter-spacing: 0.05rem;
+      }
     `,
   ];
 
   constructor() {
     super();
     this.disabled = false;
+    this.important = false;
   }
 
   render() {
@@ -41,7 +50,8 @@ export class custombutton extends LitElement {
       <button
         ?disabled="${this.disabled}"
         ?big="${this.big}"
-        .style="background-color: ${this.color}"
+        ?important="${this.important}"
+        .style="background-color: ${this.bcolor}; color: ${this.color}"
       >
         <slot></slot>
       </button>
