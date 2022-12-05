@@ -19,12 +19,12 @@ export class rankingpage extends LitElement {
         flex-direction: column;
         width: 100%;
         flex: 1;
+        padding: 0 1rem;
         overflow-y: auto;
       }
       .rankItem {
         font-size: 1.5rem;
         padding: 0.4em 0;
-        margin-right: 0.5rem;
         border-bottom: 0.8px solid black;
         display: flex;
         justify-content: space-between;

@@ -12,4 +12,16 @@ export const reset = css`
     font-weight: 900;
     margin: 2rem 0;
   }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #e2e2e2aa;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #51515177;
+    border-radius: 2px;
+  }
 `;
