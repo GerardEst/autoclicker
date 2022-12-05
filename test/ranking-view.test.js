@@ -14,7 +14,7 @@ describe('Can go to ranking from home', async () => {
     expect(rankingButton).to.exist;
   });
 
-  it('Loads the ranking-page component', async () => {
+  it('Opens the ranking-page from home ranking button', async () => {
     rankingButton.shadowRoot.querySelector('a').click();
 
     const page = document.querySelector('body');
@@ -33,8 +33,18 @@ describe('Ranking page', async () => {
     expect(rankingPage.shadowRoot).to.exist;
   });
 
-  it('Shows correct people from the state', () => {
+  it('Shows correct number of players from the state', () => {
+    const rank = rankingPage.shadowRoot.querySelectorAll('.rankItem');
+
+    expect(rank.length).to.equal(3);
+  });
+
+  it('Show correct names and points', () => {
     const rank = rankingPage.shadowRoot.querySelector('.rankItem');
-    expect(rank.textContent).to.equal('Test Player 1');
+    const name = rank.querySelector('p:first-child');
+    const points = rank.querySelector('p:last-child');
+
+    expect(name.textContent).to.equal('Test Player 1');
+    expect(points.textContent).to.equal('0');
   });
 });
