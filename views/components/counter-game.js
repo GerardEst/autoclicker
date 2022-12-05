@@ -68,7 +68,9 @@ export class counteregame extends LitElement {
     return html`
       <section>
         <p class="money__num">${this.money}</p>
-        <custom-button id="sellFish" @click="${this._sellFish}">Sell!</custom-button>
+        <custom-button color="var(--gold)" id="sellFish" @click="${this._sellFish}"
+          >Sell!</custom-button
+        >
       </section>
 
       <section class="counter">

@@ -41,11 +41,11 @@ export class buybutton extends LitElement {
       }
       button span:first-child {
         border-radius: var(--borderradius) 0 0 var(--borderradius);
-        background-color: #71ba51;
+        background-color: var(--levelUp);
       }
       button span:last-child {
         border-radius: 0 var(--borderradius) var(--borderradius) 0;
-        background-color: #fec606;
+        background-color: var(--gold);
       }
     `,
   ];

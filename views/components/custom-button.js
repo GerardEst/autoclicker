@@ -5,6 +5,7 @@ export class custombutton extends LitElement {
   static properties = {
     disabled: {type: Boolean},
     big: {type: Boolean},
+    color: {type: String},
   };
 
   static styles = [
@@ -37,7 +38,11 @@ export class custombutton extends LitElement {
 
   render() {
     return html`
-      <button ?disabled="${this.disabled}" ?big="${this.big}">
+      <button
+        ?disabled="${this.disabled}"
+        ?big="${this.big}"
+        .style="background-color: ${this.color}"
+      >
         <slot></slot>
       </button>
     `;
