@@ -9,13 +9,17 @@ export class rankingpage extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
-        height: 100%;
+        max-width: var(--pageWidth);
+        margin: auto;
+        height: calc(100% - var(--pageBottomSpace));
         padding: 0 40px;
       }
       .rankList {
         display: flex;
         flex-direction: column;
         width: 100%;
+        flex: 1;
+        overflow-y: auto;
       }
       .rankItem {
         background-color: white;
@@ -37,14 +41,12 @@ export class rankingpage extends LitElement {
 
   render() {
     return html`
-      <section>
-        <h1>Ranking</h1>
-        <div class="rankList">
-          ${this.playersList.map(player => {
-            return html`<div class="rankItem">${player.name}</div>`;
-          })}
-        </div>
-      </section>
+      <h1>Ranking</h1>
+      <div class="rankList">
+        ${this.playersList.map(player => {
+          return html`<div class="rankItem">${player.name}</div>`;
+        })}
+      </div>
     `;
   }
 

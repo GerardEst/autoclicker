@@ -11,8 +11,10 @@ export class homepage extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
-        height: 100%;
         padding: 0 40px;
+        max-width: var(--pageWidth);
+        height: calc(100% - var(--pageBottomSpace));
+        margin: auto;
       }
       .welcome {
         display: flex;
@@ -20,12 +22,6 @@ export class homepage extends LitElement {
         flex: 1;
 
         align-items: center;
-      }
-      h1 {
-        text-align: center;
-        font-family: 'Alexandria';
-        font-size: 3rem;
-        font-weight: 900;
       }
       .login {
         display: flex;
@@ -45,7 +41,9 @@ export class homepage extends LitElement {
       <section class="login">
         <user-form></user-form>
       </section>
-      <link-button href="/ranking">Ranking</link-button>
+      <section>
+        <link-button href="/ranking">Ranking</link-button>
+      </section>
     `;
   }
 }

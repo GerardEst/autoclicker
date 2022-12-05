@@ -1,6 +1,9 @@
 :root {
   --main-color: rgb(131, 214, 222);
   --main-color--light: rgb(131, 214, 222, 0.4);
+
+  --pageWidth: 400px;
+  --pageBottomSpace: 40px;
 }
 
 @font-face {
