@@ -52,10 +52,12 @@ export class counteregame extends LitElement {
   static properties = {
     counter: {type: Number},
     message: {type: String},
+    money: {type: Number},
   };
   constructor() {
     super();
     this.counter = 0;
+    this.money = 0;
     this.intervals = [];
     this.upgrades = 0;
     this.baseCost = 50;
@@ -64,22 +66,28 @@ export class counteregame extends LitElement {
 
   render() {
     return html`
+      <section>
+        <p class="money__num">${this.money}</p>
+        <custom-button id="sellFish" @click="${this._sellFish}">Sell!</custom-button>
+      </section>
+
       <section class="counter">
         <p>You've caught</p>
         <p class="counter__num">${this.counter}</p>
         <p>fish</p>
       </section>
+
       <section class="upgrades">
-        <custom-button @click="${this._increment}" big>Throw the rod</custom-button>
+        <custom-button id="toFish" @click="${this._increment}" big>Throw the rod</custom-button>
         <buy-button
-          ?disabled="${this.counter < this.UPGRADE_PRICE()}"
+          ?disabled="${this.money < this.UPGRADE_PRICE()}"
           @click="${this._buyUpgrade}"
           item="net"
           level=${this.upgrades}
           cost=${this.UPGRADE_PRICE()}
         ></buy-button>
       </section>
-      <!-- Aixo podria ser un petit component apart al que se li passa el missatge -->
+
       <section class="messages">
         <p class="message">${this.message}</p>
       </section>
@@ -92,6 +100,7 @@ export class counteregame extends LitElement {
     let currentPlayer = state.getCurrentPlayer();
     let isReturningPlayer = state.getStoredPlayer(currentPlayer);
     if (isReturningPlayer) {
+      this.money = isReturningPlayer.money;
       this.counter = isReturningPlayer.points;
       this.upgrades = isReturningPlayer.upgrades;
       this._rebuildIntervalsFor(this.upgrades);
@@ -112,12 +121,20 @@ export class counteregame extends LitElement {
     state.alterCurrentPlayer('points', this.counter);
   }
 
+  _sellFish() {
+    this.money += this.counter;
+    this.counter = 0;
+
+    state.alterCurrentPlayer('money', this.money);
+    state.alterCurrentPlayer('points', this.counter);
+  }
+
   _buyUpgrade() {
-    if (this.counter < this.UPGRADE_PRICE()) {
+    if (this.money < this.UPGRADE_PRICE()) {
       this._showMessage('Not enough credits');
       return;
     }
-    this.counter -= this.UPGRADE_PRICE();
+    this.money -= this.UPGRADE_PRICE();
     this._createNewUpgrader();
     this.upgrades++;
     state.alterCurrentPlayer('upgrades', this.upgrades);

@@ -34,6 +34,7 @@ export const setCurrentPlayer = currentPlayer => {
 export const addNewPlayer = name => {
   let newPlayerStats = {
     name: name,
+    money: 0,
     points: 0,
     upgrades: 0,
   };
