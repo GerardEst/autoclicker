@@ -2,6 +2,19 @@ const state = {
   currentPlayer: '',
   players: [],
 };
+/**
+ * players: [
+ *  { name: aaa
+ *    ...
+ *    upgrades: [
+ *      {
+ *        name: 'net',
+ *        level: 3
+ *      }
+ *    ]
+ *  }
+ * ]
+ */
 
 let localStorageData = JSON.parse(localStorage.getItem('autoclicker'));
 if (localStorageData) {
@@ -36,7 +49,7 @@ export const addNewPlayer = name => {
     name: name,
     money: 0,
     points: 0,
-    upgrades: 0,
+    upgrades: [],
   };
   state.players.push(newPlayerStats);
   saveChangesToLocalstorage();
