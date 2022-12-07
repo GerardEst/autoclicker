@@ -4,7 +4,6 @@ import '../views/pages/ranking-page.js';
 
 import './router.js';
 
-/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker
@@ -13,4 +12,3 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('service worker not registered', err));
   });
 }
-*/
