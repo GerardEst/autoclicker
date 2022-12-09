@@ -3,15 +3,18 @@ export const upgrades = [
     name: 'net',
     baseCost: 50,
     speed: 1000,
+    damage: 1,
   },
   {
     name: 'laser',
-    baseCost: 200,
-    speed: 700,
+    baseCost: 900,
+    speed: 200,
+    damage: 1,
   },
   {
-    name: 'atomic bomb',
+    name: 'mini bomb',
     baseCost: 1000,
-    speed: 500,
+    speed: 5000,
+    damage: 50,
   },
 ];

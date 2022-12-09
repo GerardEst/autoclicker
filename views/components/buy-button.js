@@ -58,8 +58,7 @@ export class buybutton extends LitElement {
   render() {
     return html`
       <button ?disabled="${this.disabled}">
-        <span> Lvl ${this.level > 0 ? this.level : ''} </span>
-
+        ${this.level > 0 ? html`<span> Lvl ${this.level} </span>` : ''}
         ${this.level > 0 ? html`Upgrade the` : html`Buy a`} ${this.item}
 
         <span> ${this.cost}$ </span>
