@@ -127,6 +127,12 @@ export class counteregame extends LitElement {
   }
 
   _buyUpgrade(name) {
+    // Tot això ho fa a un temps correcte
+    // Però no updateja cap component fins que passen els X segons de l'interval
+    // Perquè?
+    // Potser perque player es un objecta i els canvis no es detecten dintre els objectes
+    // En canvi quan fa update del counter d'alguna manera s'adona de tot lo altre
+
     const upgrade = upgrades.find(upgrade => upgrade.name === name);
 
     if (this.player.money < this.GET_UPGRADE_PRICE(upgrade)) {
@@ -151,6 +157,7 @@ export class counteregame extends LitElement {
 
     state.alterCurrentPlayer('upgrades', this.player.upgrades);
     this._createNewUpgrader(upgrade.speed, upgrade.damage);
+    this.requestUpdate();
   }
 
   _createNewUpgrader(speed, damage = 1) {
