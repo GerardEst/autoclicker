@@ -1,7 +1,7 @@
 import {LitElement, css, html} from 'lit';
 import * as state from '../../src/state.js';
+import * as db from '../../src/db.js';
 import {reset} from '../resetcss';
-import {upgrades} from '../../src/db.js';
 import '../components/custom-button';
 import '../components/game-counter';
 import '../components/buy-button';
@@ -70,10 +70,10 @@ export class counteregame extends LitElement {
       </section>
 
       <section class="upgrades">
-        <custom-button id="toFish" @click="${() => this._incrementBy(1000)}" big
+        <custom-button id="toFish" @click="${() => this._incrementBy(50)}" big
           >Throw the rod</custom-button
         >
-        ${upgrades.map(upgrade => {
+        ${db.upgrades.map(upgrade => {
           return html`
             <buy-button
               ?disabled="${this.player.money < this.GET_UPGRADE_PRICE(upgrade)}"
@@ -126,29 +126,23 @@ export class counteregame extends LitElement {
     state.alterCurrentPlayer('points', this.counter);
   }
 
-  _buyUpgrade(name) {
-    // Tot això ho fa a un temps correcte
-    // Però no updateja cap component fins que passen els X segons de l'interval
-    // Perquè?
-    // Potser perque player es un objecta i els canvis no es detecten dintre els objectes
-    // En canvi quan fa update del counter d'alguna manera s'adona de tot lo altre
+  _buyUpgrade(upgradeName) {
+    const databaseUpgrade = db.upgrades.find(upgrade => upgrade.name === upgradeName);
 
-    const upgrade = upgrades.find(upgrade => upgrade.name === name);
-
-    if (this.player.money < this.GET_UPGRADE_PRICE(upgrade)) {
+    if (this.player.money < this.GET_UPGRADE_PRICE(databaseUpgrade)) {
       this._showMessage('Not enough credits');
       return;
     }
 
-    this.player.money -= this.GET_UPGRADE_PRICE(upgrade);
+    this.player.money -= this.GET_UPGRADE_PRICE(databaseUpgrade);
 
     let playerUpgrade = this.player.upgrades.find(
-      playerUpgrade => playerUpgrade.name === upgrade.name
+      playerUpgrade => playerUpgrade.name === databaseUpgrade.name
     );
 
     if (!playerUpgrade) {
       this.player.upgrades.push({
-        name,
+        name: databaseUpgrade.name,
         level: 1,
       });
     } else {
@@ -156,15 +150,26 @@ export class counteregame extends LitElement {
     }
 
     state.alterCurrentPlayer('upgrades', this.player.upgrades);
-    this._createNewUpgrader(upgrade.speed, upgrade.damage);
+
+    this._updateUpgradeInterval(
+      databaseUpgrade.name,
+      databaseUpgrade.speed,
+      databaseUpgrade.damage,
+      playerUpgrade ? playerUpgrade.level : 1
+    );
+
     this.requestUpdate();
   }
 
-  _createNewUpgrader(speed, damage = 1) {
-    const interval = setInterval(() => {
+  _updateUpgradeInterval(name, speed, damage, level) {
+    let time = speed / level;
+
+    clearInterval(this.intervals[name]);
+    this.intervals[name] = setInterval(() => {
       this._incrementBy(damage);
-    }, speed);
-    this.intervals.push(interval);
+    }, time);
+
+    console.log(this.intervals);
   }
 
   _showMessage(message) {
@@ -176,9 +181,14 @@ export class counteregame extends LitElement {
 
   _rebuildIntervalsFor(playerUpgrades) {
     for (let playerUpgrade of playerUpgrades) {
-      const upgrade = upgrades.find(upgrade => upgrade.name === playerUpgrade.name);
+      const upgrade = db.upgrades.find(upgrade => upgrade.name === playerUpgrade.name);
       for (let i = 0; i < playerUpgrade.level; i++) {
-        this._createNewUpgrader(upgrade.speed, upgrade.damage);
+        this._updateUpgradeInterval(
+          upgrade.name,
+          upgrade.speed,
+          upgrade.damage,
+          playerUpgrade.level
+        );
       }
     }
   }
