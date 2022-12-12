@@ -70,7 +70,7 @@ export class counteregame extends LitElement {
       </section>
 
       <section class="upgrades">
-        <custom-button id="toFish" @click="${() => this._incrementBy(50)}" big
+        <custom-button id="toFish" @click="${() => this._incrementBy(1)}" big
           >Throw the rod</custom-button
         >
         ${db.upgrades.map(upgrade => {

@@ -5,6 +5,11 @@ class GameCounter extends LitElement {
   static styles = [
     reset,
     css`
+      :host {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+      }
       .counter {
         flex: 1;
         display: flex;

@@ -12,7 +12,7 @@ export const upgrades = [
     damage: 1,
   },
   {
-    name: 'mini bomb',
+    name: 'bomb',
     baseCost: 1000,
     speed: 5000,
     damage: 50,

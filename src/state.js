@@ -2,19 +2,6 @@ const state = {
   currentPlayer: '',
   players: [],
 };
-/**
- * players: [
- *  { name: aaa
- *    ...
- *    upgrades: [
- *      {
- *        name: 'net',
- *        level: 3
- *      }
- *    ]
- *  }
- * ]
- */
 
 let localStorageData = JSON.parse(localStorage.getItem('autoclicker'));
 if (localStorageData) {
