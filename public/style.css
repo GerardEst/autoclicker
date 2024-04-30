@@ -1,6 +1,11 @@
 :root {
   --main-color: rgb(131, 214, 222);
   --main-color--light: rgb(131, 214, 222, 0.4);
+  --gold: rgb(254, 198, 6);
+  --levelUp: rgb(113, 186, 81);
+  
+  --pageWidth: 400px;
+  --pageBottomSpace: 40px;
 }
 
 @font-face {

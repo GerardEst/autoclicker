@@ -1,6 +1,7 @@
 const routes = {
   '/': 'home-page',
   '/game': 'game-page',
+  '/ranking': 'ranking-page',
 };
 
 if (document.title === '404') dealWith404();

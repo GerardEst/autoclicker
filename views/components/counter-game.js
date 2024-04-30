@@ -1,7 +1,9 @@
 import {LitElement, css, html} from 'lit';
 import * as state from '../../src/state.js';
+import * as db from '../../src/db.js';
 import {reset} from '../resetcss';
 import '../components/custom-button';
+import '../components/game-counter';
 import '../components/buy-button';
 
 export class counteregame extends LitElement {
@@ -17,22 +19,6 @@ export class counteregame extends LitElement {
       p {
         font-size: 2rem;
       }
-      .counter {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .counter p {
-        font-size: 1.5rem;
-        font-weight: 200;
-      }
-      .counter .counter__num {
-        font-family: 'Alexandria';
-        font-weight: 800;
-        font-size: 3rem;
-      }
       .upgrades {
         margin-top: auto;
         width: 70%;
@@ -46,40 +32,60 @@ export class counteregame extends LitElement {
       .message {
         font-size: 1rem;
       }
+      .money__num {
+        font-size: 1.5rem;
+      }
     `,
   ];
 
   static properties = {
     counter: {type: Number},
     message: {type: String},
+    player: {type: Object},
   };
   constructor() {
     super();
     this.counter = 0;
     this.intervals = [];
-    this.upgrades = 0;
-    this.baseCost = 50;
-    this.speed = 100;
+    this.player = {
+      money: 0,
+      upgrades: [],
+    };
   }
 
   render() {
     return html`
-      <section class="counter">
-        <p>You've caught</p>
-        <p class="counter__num">${this.counter}</p>
-        <p>fish</p>
+      <game-counter counter="${this.counter}"></game-counter>
+
+      <section class="money">
+        <p class="money__num">${this.player.money}€</p>
+        <custom-button
+          important
+          bcolor="var(--gold)"
+          color="white"
+          id="sellFish"
+          @click="${this._sellFish}"
+          >Sell fish</custom-button
+        >
       </section>
+
       <section class="upgrades">
-        <custom-button @click="${this._increment}" big>Throw the rod</custom-button>
-        <buy-button
-          ?disabled="${this.counter < this.UPGRADE_PRICE()}"
-          @click="${this._buyUpgrade}"
-          item="net"
-          level=${this.upgrades}
-          cost=${this.UPGRADE_PRICE()}
-        ></buy-button>
+        <custom-button id="toFish" @click="${() => this._incrementBy(1)}" big
+          >Throw the rod</custom-button
+        >
+        ${db.upgrades.map(upgrade => {
+          return html`
+            <buy-button
+              ?disabled="${this.player.money < this.GET_UPGRADE_PRICE(upgrade)}"
+              @click="${() => this._buyUpgrade(upgrade.name)}"
+              item="${upgrade.name}"
+              level=${this.GET_UPGRADE_LEVEL(upgrade.name)}
+              cost=${this.GET_UPGRADE_PRICE(upgrade)}
+            ></buy-button>
+          `;
+        })}
       </section>
-      <!-- Aixo podria ser un petit component apart al que se li passa el missatge -->
+
       <section class="messages">
         <p class="message">${this.message}</p>
       </section>
@@ -93,8 +99,8 @@ export class counteregame extends LitElement {
     let isReturningPlayer = state.getStoredPlayer(currentPlayer);
     if (isReturningPlayer) {
       this.counter = isReturningPlayer.points;
-      this.upgrades = isReturningPlayer.upgrades;
-      this._rebuildIntervalsFor(this.upgrades);
+      this.player = isReturningPlayer;
+      this._rebuildIntervalsFor(isReturningPlayer.upgrades);
       return;
     }
     state.addNewPlayer(currentPlayer);
@@ -107,27 +113,63 @@ export class counteregame extends LitElement {
     state.clearCurrentPlayer();
   }
 
-  _increment() {
-    this.counter++;
+  _incrementBy(amount) {
+    this.counter += amount;
     state.alterCurrentPlayer('points', this.counter);
   }
 
-  _buyUpgrade() {
-    if (this.counter < this.UPGRADE_PRICE()) {
+  _sellFish() {
+    this.player.money += this.counter;
+    this.counter = 0;
+
+    state.alterCurrentPlayer('money', this.player.money);
+    state.alterCurrentPlayer('points', this.counter);
+  }
+
+  _buyUpgrade(upgradeName) {
+    const databaseUpgrade = db.upgrades.find(upgrade => upgrade.name === upgradeName);
+
+    if (this.player.money < this.GET_UPGRADE_PRICE(databaseUpgrade)) {
       this._showMessage('Not enough credits');
       return;
     }
-    this.counter -= this.UPGRADE_PRICE();
-    this._createNewUpgrader();
-    this.upgrades++;
-    state.alterCurrentPlayer('upgrades', this.upgrades);
+
+    this.player.money -= this.GET_UPGRADE_PRICE(databaseUpgrade);
+
+    let playerUpgrade = this.player.upgrades.find(
+      playerUpgrade => playerUpgrade.name === databaseUpgrade.name
+    );
+
+    if (!playerUpgrade) {
+      this.player.upgrades.push({
+        name: databaseUpgrade.name,
+        level: 1,
+      });
+    } else {
+      playerUpgrade.level++;
+    }
+
+    state.alterCurrentPlayer('upgrades', this.player.upgrades);
+
+    this._updateUpgradeInterval(
+      databaseUpgrade.name,
+      databaseUpgrade.speed,
+      databaseUpgrade.damage,
+      playerUpgrade ? playerUpgrade.level : 1
+    );
+
+    this.requestUpdate();
   }
 
-  _createNewUpgrader() {
-    const interval = setInterval(() => {
-      this._increment();
-    }, this.speed);
-    this.intervals.push(interval);
+  _updateUpgradeInterval(name, speed, damage, level) {
+    let time = speed / level;
+
+    clearInterval(this.intervals[name]);
+    this.intervals[name] = setInterval(() => {
+      this._incrementBy(damage);
+    }, time);
+
+    console.log(this.intervals);
   }
 
   _showMessage(message) {
@@ -137,9 +179,17 @@ export class counteregame extends LitElement {
     }, 3000);
   }
 
-  _rebuildIntervalsFor(amountOfUgrades) {
-    for (let i = 0; i < amountOfUgrades; i++) {
-      this._createNewUpgrader();
+  _rebuildIntervalsFor(playerUpgrades) {
+    for (let playerUpgrade of playerUpgrades) {
+      const upgrade = db.upgrades.find(upgrade => upgrade.name === playerUpgrade.name);
+      for (let i = 0; i < playerUpgrade.level; i++) {
+        this._updateUpgradeInterval(
+          upgrade.name,
+          upgrade.speed,
+          upgrade.damage,
+          playerUpgrade.level
+        );
+      }
     }
   }
 
@@ -150,7 +200,19 @@ export class counteregame extends LitElement {
     this.intervals = [];
   }
 
-  UPGRADE_PRICE = () => this.baseCost + this.baseCost * this.upgrades;
+  // CONSTANTS
+  GET_UPGRADE_PRICE = upgrade => {
+    return this.CALCULATE_UPGRADE_PRICE(upgrade.baseCost, this.GET_UPGRADE_LEVEL(upgrade.name));
+  };
+
+  GET_UPGRADE_LEVEL = name => {
+    let playerUpgrade = this.player.upgrades.find(upgrade => upgrade.name === name);
+    if (!playerUpgrade) return 0;
+
+    return Number(playerUpgrade.level);
+  };
+
+  CALCULATE_UPGRADE_PRICE = (baseCost, upgrades) => baseCost + baseCost * upgrades;
 }
 
 customElements.define('counter-game', counteregame);
